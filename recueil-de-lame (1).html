@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recueil de l'Âme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+English+SC&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0a0804;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: #d4af6a;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,146,42,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 100px 40px 70px;
+      border-bottom: 1px solid #2a1c08;
+    }
+
+    .ornament-top {
+      font-size: 26px;
+      color: #c9922a;
+      letter-spacing: 14px;
+      margin-bottom: 28px;
+      display: block;
+      animation: fadeDown 1s ease both;
+    }
+
+    .hero-title {
+      font-family: 'IM Fell English SC', serif;
+      font-size: clamp(36px, 7vw, 60px);
+      font-weight: 400;
+      color: #ecd07a;
+      letter-spacing: 5px;
+      line-height: 1.15;
+      text-shadow: 0 0 60px rgba(201,146,42,0.25);
+      margin-bottom: 18px;
+      animation: fadeDown 1s ease 0.15s both;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      font-style: italic;
+      color: #6a5030;
+      letter-spacing: 4px;
+      font-weight: 300;
+      animation: fadeDown 1s ease 0.3s both;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,8,4,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #1e1508;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 28px;
+      padding: 14px 24px;
+    }
+
+    .nav a {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #5a4020;
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav a:hover { color: #c9922a; }
+
+    /* JOURNAL */
+    .journal {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 40px 100px;
+    }
+
+    .section-title {
+      font-family: 'IM Fell English SC', serif;
+      font-size: 11px;
+      letter-spacing: 6px;
+      color: #3a2a10;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 70px 0 48px;
+    }
+
+    /* ENTRY */
+    .entry {
+      margin-bottom: 72px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .entry.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .entry-tag {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #5a4020;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .entry-tag::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: #1e1508;
+    }
+
+    /* Quote style */
+    .quote-entry {
+      padding: 36px 44px;
+      border-left: 2px solid #c9922a;
+      background: rgba(201,146,42,0.04);
+      position: relative;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .quote-entry::before {
+      content: '\201C';
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      font-size: 80px;
+      color: #1e1305;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-size: 20px;
+      line-height: 1.95;
+      color: #c8a85a;
+      font-style: italic;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Poem style */
+    .poem-text {
+      font-size: 21px;
+      line-height: 2;
+      color: #c8a85a;
+      font-style: italic;
+      font-weight: 300;
+      padding-left: 20px;
+    }
+
+    .poem-text .verse { display: block; }
+    .poem-text .verse-break { display: block; margin-bottom: 20px; }
+
+    /* Aphorism style */
+    .aphorism {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .aphorism-text {
+      font-size: 22px;
+      line-height: 1.85;
+      color: #c8a85a;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .aphorism-text::before { content: '\00AB\00A0'; color: #c9922a; }
+    .aphorism-text::after  { content: '\00A0\00BB'; color: #c9922a; }
+
+    /* DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin: 48px auto;
+      max-width: 260px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #2e1f08, transparent);
+    }
+
+    .divider-diamond {
+      width: 7px;
+      height: 7px;
+      border: 1px solid #c9922a;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 40px 80px;
+      border-top: 1px solid #1a1005;
+    }
+
+    .footer-ornament {
+      font-size: 20px;
+      color: #2e1f08;
+      letter-spacing: 20px;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #3a2a10;
+      font-style: italic;
+    }
+
+    .candle-line {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 200px;
+      background: linear-gradient(to top, transparent, rgba(201,146,42,0.12));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 70px 24px 50px; }
+      .journal { padding: 40px 20px 80px; }
+      .quote-entry { padding: 28px 20px; }
+      .poem-text { font-size: 18px; padding-left: 10px; }
+      .aphorism-text { font-size: 19px; }
+      .nav { gap: 8px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="candle-line"></div>
+
+  <header class="hero">
+    <span class="ornament-top">✦ &nbsp; ✦ &nbsp; ✦</span>
+    <h1 class="hero-title">Recueil de l'Âme</h1>
+    <p class="hero-sub">poèmes &amp; pensées</p>
+  </header>
+
+  <nav class="nav">
+    <a href="#amour">Amour sincère</a>
+    <a href="#fragments">Fragments du cœur</a>
+    <a href="#chezmoi">Chez moi</a>
+    <a href="#mots">Plus que les mots</a>
+    <a href="#visage">Un seul visage</a>
+    <a href="#croyance">Ma croyance</a>
+    <a href="#riche">Le plus riche</a>
+    <a href="#plume">Plume &amp; encre</a>
+    <a href="#principes">Mes principes</a>
+    <a href="#lumiere">Lumière &amp; ténèbres</a>
+  </nav>
+
+  <main class="journal">
+
+    <div class="section-title">— Poèmes —</div>
+
+    <!-- I -->
+    <article class="entry" id="amour">
+      <div class="entry-tag">I &nbsp;— Amour sincère</div>
+      <div class="quote-entry">
+        <p class="quote-text">
+          Si notre relation ne doit être faite que d'une chose, c'est l'amour.<br><br>
+          Parce que l'amour que je te porte ne se comprend pas, il ne se consume pas, et surtout il est sincère.<br><br>
+          Si je pouvais passer mes journées à te dire que tu es précieuse à mes yeux, je le ferais, pour voir ton sourire en continu apaiser mon âme.
+        </p>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- II -->
+    <article class="entry" id="fragments">
+      <div class="entry-tag">II &nbsp;— Fragments du cœur</div>
+      <div class="poem-text">
+        <span class="verse">Je t'aime plus fort qu'un millier d'éclairs</span>
+        <span class="verse-break">qui s'abattent sur le monde.</span>
+        <span class="verse">Je veux être le phénix qui fera renaître</span>
+        <span class="verse-break">l'amour et la confiance dans ton cœur.</span>
+        <span class="verse">Que d'amour quand mon regard se pose sur toi,</span>
+        <span class="verse">que de tendresse quand je pense à toi,</span>
+        <span class="verse">que de rêves quand je nous imagine.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- III -->
+    <article class="entry" id="chezmoi">
+      <div class="entry-tag">III &nbsp;— Chez moi</div>
+      <div class="poem-text">
+        <span class="verse">Chez moi on ne dit pas je t'aime,</span>
+        <span class="verse-break">on préfère dire que peu importe l'heure et le lieu,</span>
+        <span class="verse-break">peu importe le temps et la température,</span>
+        <span class="verse">si je pense à toi tu es près de moi.</span>
+        <span class="verse-break">Ton odeur et l'idée de ton sourire suffisent à remplir ma pensée.</span>
+        <span class="verse">Je préfère mille fois un instant dans tes bras</span>
+        <span class="verse">à un seul repas sans toi.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- IV -->
+    <article class="entry" id="mots">
+      <div class="entry-tag">IV &nbsp;— Plus que les mots</div>
+      <div class="aphorism">
+        <p class="aphorism-text">Je t'aime plus que j'ai de mots dans ma tête et plus que n'importe quelle illusion ne pourrait montrer.</p>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- V -->
+    <article class="entry" id="visage">
+      <div class="entry-tag">V &nbsp;— Un seul visage</div>
+      <div class="quote-entry">
+        <p class="quote-text">
+          Parce que si mon destin était de ne plus voir qu'un seul visage,<br>
+          ça serait le tien,<br>
+          pour ton sourire qui réchauffe mon cœur.
+        </p>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- VI -->
+    <article class="entry" id="croyance">
+      <div class="entry-tag">VI &nbsp;— Ma croyance</div>
+      <div class="poem-text">
+        <span class="verse">Si je devais avoir une croyance,</span>
+        <span class="verse-break">ce serait celle de notre amour.</span>
+        <span class="verse">Si mon cœur devait se lier à quelqu'un,</span>
+        <span class="verse-break">ça ne serait qu'à ton sourire.</span>
+        <span class="verse">Aujourd'hui c'est nous,</span>
+        <span class="verse">demain le sera encore.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- VII -->
+    <article class="entry" id="riche">
+      <div class="entry-tag">VII &nbsp;— Le plus riche</div>
+      <div class="poem-text">
+        <span class="verse">Pas besoin d'argent, je suis déjà le plus riche.</span>
+        <span class="verse">Pas besoin de nourriture, je suis déjà nourri.</span>
+        <span class="verse">Pas besoin de boisson, je suis déjà hydraté.</span>
+        <span class="verse-break">Et surtout pas besoin des autres.</span>
+        <span class="verse">J'ai déjà ton amour.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- VIII -->
+    <article class="entry" id="plume">
+      <div class="entry-tag">VIII &nbsp;— Plume &amp; encre</div>
+      <div class="poem-text">
+        <span class="verse">Je t'aime plus que n'importe quelle plume ne peut l'écrire,</span>
+        <span class="verse">plus qu'il n'y a d'encre et de papier pour le lire,</span>
+        <span class="verse">plus que de temps pour le dire.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- IX -->
+    <article class="entry" id="principes">
+      <div class="entry-tag">IX &nbsp;— Mes principes</div>
+      <div class="quote-entry">
+        <p class="quote-text">
+          Si mes principes ne devaient être qu'une seule chose,<br>
+          ça serait notre relation.<br><br>
+          Si mon amour ne devait être qu'unique,<br>
+          il te serait destiné.
+        </p>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <!-- X -->
+    <article class="entry" id="lumiere">
+      <div class="entry-tag">X &nbsp;— Lumière &amp; ténèbres</div>
+      <div class="poem-text">
+        <span class="verse">Ton sourire vaut plus que n'importe quel roman</span>
+        <span class="verse-break">que je pourrais écrire à ton nom.</span>
+        <span class="verse">Mon bonheur est au tien ce que la lumière est pour les ténèbres :</span>
+        <span class="verse">Indispensable.</span>
+      </div>
+    </article>
+
+    <div class="divider"><div class="divider-diamond"></div></div>
+
+    <p style="text-align:center; font-size:13px; letter-spacing:3px; color:#3a2a10; font-style:italic; font-family:'Cormorant Garamond',serif; margin-top: 40px;">
+      d'autres pages à venir…
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-ornament">❧ &nbsp; ✦ &nbsp; ❧</span>
+    <p class="footer-text">Recueil de l'Âme &nbsp;·&nbsp; tous droits réservés</p>
+  </footer>
+
+  <script>
+    const entries = document.querySelectorAll('.entry');
+    const observer = new IntersectionObserver((list) => {
+      list.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    entries.forEach(e => observer.observe(e));
+
+    document.querySelectorAll('.nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>
